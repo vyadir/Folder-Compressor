@@ -1,3 +1,4 @@
+# Importar las bibliotecas necesarias
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import ttk
@@ -7,13 +8,15 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
-import dotenv
+import dotenv  # Para cargar las variables de entorno desde un archivo .env
 
 # Cargar las variables de entorno desde el archivo .env
 dotenv.load_dotenv()
 
+# Definir una clase para la aplicación del compresor
 class CompressorApp:
     def __init__(self, root):
+        # Inicializar la aplicación con la ventana principal
         self.root = root
         self.root.title("Compresor de Directorios")
         self.root.geometry("800x400")
@@ -44,6 +47,7 @@ class CompressorApp:
         self.result_label.pack()
 
     def compress_and_send(self):
+        # Función para comprimir y enviar el directorio seleccionado
         folder_path = filedialog.askdirectory(title="Selecciona un directorio para comprimir")
         
         if folder_path:
@@ -77,6 +81,7 @@ class CompressorApp:
             self.result_label.config(text="Error: No se seleccionó un directorio.", fg="red")
 
     def send_email(self, folder_path, filename):
+        # Función para enviar el archivo comprimido por correo electrónico
         try:
             # Configuración del servidor SMTP
             smtp_server = os.getenv("SMTP_SERVIDOR")
@@ -114,6 +119,7 @@ class CompressorApp:
             return False
 
 if __name__ == "__main__":
+    # Iniciar la aplicación
     root = tk.Tk()
     app = CompressorApp(root)
     root.mainloop()
